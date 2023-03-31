@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:ThomDev031222@127.0.0.1:3306/traveler" 
+}
+
+
+model traveler {
+  id_traveler Int     @id @default(autoincrement())
+  image_link  String
+  image       Bytes?
+  user        Int
+  contact     Int
+  id_contact  contact @relation(fields: [contact], references: [id_contact])
+  id_user     user    @relation(fields: [user], references: [id_user])
+
+}
+
+model contact {
+  id_contact Int        @id @default(autoincrement())
+  name       String
+  phone      String
+  mail       String     @unique
+  traveler   traveler[]
+}
+
+model user {
+  id_user         Int              @id @default(autoincrement())
+  user_name       String
+  password        String
+  traveler        traveler[]
+  user_permission user_permission?
+}
+
+model permession {
+  id_permission   Int              @id @default(autoincrement())
+  description     String
+  user_permission user_permission?
+}
+
+model user_permission {
+  id_permission Int        @unique
+  id_user       Int        @unique
+  permission    permession @relation(fields: [id_permission], references: [id_permission])
+  user          user       @relation(fields: [id_user], references: [id_user])
+}
+
+model country {
+  id_country      Int     @id @default(autoincrement())
+  portuguese_name String
+  english_name    String
+  image_link      String?
+  image           Bytes?
+  state           state[]
+}
+
+model region {
+  id_region Int     @id @default(autoincrement())
+  name      String
+  uf        String
+  state     state[]
+}
+
+model state {
+  id_state   Int     @id @default(autoincrement())
+  uf_code    Int     @unique
+  name       String
+  uf         String
+  region     Int
+  country    Int
+  city       city[]
+  id_country country @relation(fields: [country], references: [id_country])
+  id_region  region  @relation(fields: [region], references: [id_region])
+
+ 
+}
+
+model city {
+  id_city   Int    @id @default(autoincrement())
+  ibge_code String
+  name      String
+  uf_state  state? @relation(fields: [state], references: [uf_code])
+  state Int
+}
