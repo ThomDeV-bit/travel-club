@@ -14,7 +14,7 @@ datasource db {
 model traveler {
   id_traveler Int     @id @default(autoincrement())
   image_link  String
-  image       Bytes?
+  image       Bytes? @db.Blob
   user        Int
   contact     Int
   id_contact  contact @relation(fields: [contact], references: [id_contact])

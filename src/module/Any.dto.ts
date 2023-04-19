@@ -14,3 +14,10 @@ export type travelerDTO = {
     user : number
     contact : number
 }
+
+export type contactDTO = {
+    id_contat : number
+    name: string
+    phone: string
+    mail : string
+}

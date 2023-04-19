@@ -8,22 +8,22 @@ export class UserController {
   constructor(private readonly userService: UserService) { }
 
 
-  @Post("/create/user")
+  @Post("/create")
   async createUser(@Body() data: userDTO) {
     return this.userService.createUser(data)
   }
 
-  @Get("/findall/users")
+  @Get("/findall/")
   async findAll() {
     return this.userService.findAll()
   }
 
-  @Put("/update/user/:id")
+  @Put("/update/:id")
   async updateUser(@Param("id", ParseIntPipe) id_user: number, @Body() data: userDTO) {
     return this.userService.updateUser(id_user, data)
   }
 
-  @Delete(":id")
+  @Delete("/:id")
   async deleteUser(@Param("id", ParseIntPipe) id_user: number) {
     return this.userService.deleteUser(id_user)
   }

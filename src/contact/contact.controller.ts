@@ -1,4 +1,4 @@
-import { Body, Controller, Put } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put } from '@nestjs/common';
 import { ContactService } from './contact.service';
 import { contactDTO } from 'src/module/Any.dto';
 
@@ -6,9 +6,12 @@ import { contactDTO } from 'src/module/Any.dto';
 export class ContactController {
   constructor(private readonly contactService: ContactService) {}
 
-  @Put("/Create")
+  @Post("/create")
     async createContact(@Body() data: contactDTO){
       return await this.contactService.creatContact(data)
     }
-    
+  @Get("/findall")
+  async findall(){
+    return this.contactService.findall()
+  }
 }
