@@ -3,7 +3,7 @@ import { TravelerService } from './traveler.service';
 import { travelerDTO } from 'src/module/Any.dto';
 import { Express } from 'express'
 import { FileInterceptor } from '@nestjs/platform-express'
-import { json } from 'stream/consumers';
+
 
 @Controller('traveler')
 export class TravelerController {
@@ -26,9 +26,9 @@ export class TravelerController {
 
   @Put("update/:id")
   @UseInterceptors(FileInterceptor('file'))
-  async updateTraveler(@Param("id", ParseIntPipe) id_traveler: number, @Body() data: travelerDTO,
-  file: Express.Multer.File) {
-    return this.travelerService.updateTraveler(id_traveler, data, file)
+  async updateTraveler(@Param("id", ParseIntPipe) id_traveler: number, @Body('data') data: string, @UploadedFile() file: Express.Multer.File) {
+    console.log(data)
+    return this.travelerService.updateTraveler(id_traveler,JSON.parse(data), file)
   }
 
 }
