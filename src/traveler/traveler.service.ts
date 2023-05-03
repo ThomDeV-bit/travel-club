@@ -30,28 +30,34 @@ export class TravelerService {
 
                 if (users && contacts) {
                         try {
-                                const user = await this.prisma.user.findFirst({
+                                const user = await this.prisma.traveler.findFirst({
                                         where: {
-                                                id_user: data.user,
-                                        }
-                                })
-                                const contact = await this.prisma.contact.findFirst({
-                                        where: {
-                                                id_contact: data.contact
-                                        }
-                                })
-                                const response = await this.prisma.traveler.create({
-                                        data: {
-                                                image_link: data.image_link,
-                                                image: file.buffer,
-                                                user: user.id_user,
-                                                contact: contact.id_contact
-                                        }
-                                })
-                                
-                                console.log("Traveler create sucefully!")
-                                return response
 
+                                                user: data.user
+                                        }
+
+
+                                })
+                                const contact = await this.prisma.traveler.findFirst({
+                                        where: {
+                                                contact: data.contact
+                                        }
+                                })
+
+                                if (!user && !contact) {
+
+                                        const response = await this.prisma.traveler.create({
+                                                data: {
+                                                        image_link: data.image_link,
+                                                        image: file.buffer,
+                                                        user: data.user,
+                                                        contact: data.contact
+                                                }
+                                        })
+
+                                        console.log("Traveler create sucefully!")
+                                        return response
+                                }
                         } catch (error) {
                                 console.error("Traveler already exists!")
                         }

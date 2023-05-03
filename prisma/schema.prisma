@@ -16,7 +16,7 @@ model traveler {
   image_link  String
   image       Bytes? @db.Blob
   user        Int
-  contact     Int
+  contact      Int
   id_contact  contact @relation(fields: [contact], references: [id_contact])
   id_user     user    @relation(fields: [user], references: [id_user])
 
