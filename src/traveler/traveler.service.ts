@@ -59,7 +59,7 @@ export class TravelerService {
                                         return response
                                 }
                         } catch (error) {
-                                console.error("Traveler already exists!")
+                                console.error(error)
                         }
                 }
         }

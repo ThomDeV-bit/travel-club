@@ -1,25 +1,23 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://root:ThomDev031222@127.0.0.1:3306/traveler" 
+  url      = env("DATABASE_URL")
 }
-
 
 model traveler {
   id_traveler Int     @id @default(autoincrement())
-  image_link  String
-  image       Bytes? @db.Blob
+  image_link  String  @db.VarChar(1000)
+  image       Bytes?
   user        Int
-  contact      Int
+  contact     Int
   id_contact  contact @relation(fields: [contact], references: [id_contact])
   id_user     user    @relation(fields: [user], references: [id_user])
 
+  @@index([contact], map: "traveler_contact_fkey")
+  @@index([user], map: "traveler_user_fkey")
 }
 
 model contact {
@@ -78,13 +76,16 @@ model state {
   id_country country @relation(fields: [country], references: [id_country])
   id_region  region  @relation(fields: [region], references: [id_region])
 
- 
+  @@index([country], map: "state_country_fkey")
+  @@index([region], map: "state_region_fkey")
 }
 
 model city {
   id_city   Int    @id @default(autoincrement())
   ibge_code String
   name      String
-  uf_state  state? @relation(fields: [state], references: [uf_code])
-  state Int
+  state     Int
+  uf_state  state  @relation(fields: [state], references: [uf_code])
+
+  @@index([state], map: "city_state_fkey")
 }

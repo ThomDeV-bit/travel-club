@@ -1,8 +1,8 @@
 -- CreateTable
 CREATE TABLE `traveler` (
     `id_traveler` INTEGER NOT NULL AUTO_INCREMENT,
-    `image_link` VARCHAR(191) NOT NULL,
-    `image` LONGBLOB NULL,
+    `image_link` VARCHAR(1000) NOT NULL,
+    `image` BLOB NULL,
     `user` INTEGER NOT NULL,
     `contact` INTEGER NOT NULL,
 
